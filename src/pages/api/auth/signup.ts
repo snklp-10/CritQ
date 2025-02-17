@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConfig/db";
 import UserModel from "@/models/User";
 import { sendVerificationEmail } from "@/lib/sendEmail";
-import Jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { signUpSchema } from "@/lib/validations/schemas";
 
 export default async function handler(
@@ -34,7 +34,7 @@ export default async function handler(
       createdAt: new Date(),
     });
 
-    const verificationToken = Jwt.sign(
+    const verificationToken = jwt.sign(
       { userId: newUser._id },
       process.env.JWT_SECRET!,
       { expiresIn: "24h" }

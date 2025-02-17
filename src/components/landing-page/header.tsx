@@ -1,159 +1,70 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
-import { Button } from "../ui/button";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { Sun, Moon } from "lucide-react";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-  NavigationMenuViewport,
+  NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
 
-const components: { title: string; href: string; description: string }[] = [
+const navbarComponents = [
   {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
+    title: "Home",
+    href: "#home",
   },
   {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
+    title: "Reviews",
+    href: "#reviews",
   },
   {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    title: "Blacklist",
+    href: "#blacklist",
   },
   {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
+    title: "Testimonials",
+    href: "#testimonials",
   },
   {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+    title: "Help",
+    href: "#help",
   },
 ];
 
-const Header = () => {
-  const [path, setPath] = useState("#products");
+export default function Header() {
   return (
-    <header className="p-4 flex justify-center items-center">
-      <Link href={"/"} className="w-full justify-left items-center gap-2">
-        <span className="font-extrabold text-2xl">CrtiQ</span>
+    <header className="w-full bg-background p-4 flex justify-between items-center">
+      <Link href="/">
+        <span className="text-2xl font-bold">CritQ</span>
       </Link>
-      <NavigationMenu className="hidden md:block">
-        <NavigationMenuList className="gap-6">
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Introduction</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                <li className="row-span-3">
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      <div className="mb-2 mt-4 text-lg font-medium">
-                        Welcome
-                      </div>
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Beautifully designed components that you can copy and
-                        paste into your apps. Accessible. Customizable. Open
-                        Source.
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                <ListItem href="/docs" title="Introduction">
-                  Re-usable components built using Radix UI and Tailwind CSS.
-                </ListItem>
-                <ListItem href="/docs/installation" title="Installation">
-                  How to install dependencies and structure your app.
-                </ListItem>
-                <ListItem href="/docs/primitives/typography" title="Typography">
-                  Styles for headings, paragraphs, lists...etc
-                </ListItem>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Features</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                {components.map((component) => (
-                  <ListItem
-                    key={component.title}
-                    title={component.title}
-                    href={component.href}
-                  >
-                    {component.description}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link href="#">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Testimonials
+      <NavigationMenu>
+        <NavigationMenuList className="hidden md:flex space-x-6">
+          {navbarComponents.map((item, index = Math.random()) => (
+            <NavigationMenuItem key={index}>
+              <NavigationMenuLink asChild>
+                <Link href={item.href} className="hover:text-white/60">
+                  <span>{item.title}</span>
+                </Link>
               </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+            </NavigationMenuItem>
+          ))}
         </NavigationMenuList>
       </NavigationMenu>
-      <aside className="w-full flex justify-end gap-2">
-        <Button>Login</Button>
-        <Button variant="secondary">Sign Up</Button>
-      </aside>
+
+      <div className="flex space-x-4 ">
+        <Link href="/login">
+          <Button variant="outline">
+            <span>Login</span>
+          </Button>
+        </Link>
+        <Link href="/signup">
+          <Button>
+            <span className="font-bold">Sign Up</span>
+          </Button>
+        </Link>
+      </div>
     </header>
   );
-};
-
-export default Header;
-
-const ListItem = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <span
-          ref={ref}
-          className={cn(
-            "group block select-none space-y-1 font-medium leading-none cursor-pointer"
-          )}
-          {...props}
-        >
-          <div className="text-black text-sm font-medium leading-none">
-            {title}
-          </div>
-          <p className="group-hover:text-black/70 line-clamp-2 text-sm leading-snug text-black/40">
-            {children}
-          </p>
-        </span>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-
-ListItem.displayName = "ListItem";
+}
