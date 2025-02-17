@@ -1,0 +1,62 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "chatgpt",
+  "elements": [
+    {
+      "type": "rectangle",
+      "id": "user-model",
+      "x": 100,
+      "y": 100,
+      "width": 220,
+      "height": 120,
+      "strokeColor": "#000000",
+      "backgroundColor": "#ffffff",
+      "text": "User\n- _id (ObjectId)\n- username (String)\n- email (String)\n- password (String)\n- isVerified (Boolean)\n- rankingPoints (Number)\n- createdAt (Date)"
+    },
+    {
+      "type": "rectangle",
+      "id": "product-model",
+      "x": 400,
+      "y": 100,
+      "width": 220,
+      "height": 120,
+      "strokeColor": "#000000",
+      "backgroundColor": "#ffffff",
+      "text": "Product\n- _id (ObjectId)\n- name (String)\n- description (String)\n- imageUrl (String)\n- purchaseLink (String)\n- reviews (ObjectId[])\n- averageRating (Number)\n- createdAt (Date)"
+    },
+    {
+      "type": "rectangle",
+      "id": "review-model",
+      "x": 250,
+      "y": 300,
+      "width": 220,
+      "height": 120,
+      "strokeColor": "#000000",
+      "backgroundColor": "#ffffff",
+      "text": "Review\n- _id (ObjectId)\n- user (ObjectId)\n- product (ObjectId)\n- rating (Number)\n- comment (String)\n- helpfulVotes (Number)\n- reported (Boolean)\n- createdAt (Date)"
+    },
+    {
+      "type": "arrow",
+      "x": 220,
+      "y": 160,
+      "width": 60,
+      "height": 0,
+      "strokeColor": "#000000",
+      "label": "writes",
+      "startId": "user-model",
+      "endId": "review-model"
+    },
+    {
+      "type": "arrow",
+      "x": 470,
+      "y": 160,
+      "width": -60,
+      "height": 0,
+      "strokeColor": "#000000",
+      "label": "belongs to",
+      "startId": "review-model",
+      "endId": "product-model"
+    }
+  ]
+}
