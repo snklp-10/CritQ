@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Banner from "../../../public/CritQ Hero IMage.png";
 import Image from "next/image";
+import Featuregrid from "@/components/landing-page/featuregrid";
 const HomePage = () => {
   return (
     <>
@@ -10,7 +11,7 @@ const HomePage = () => {
         <h1 className="text-4xl md:text-6xl font-bold leading-tight max-w-5xl">
           Expose Bad Products & Services.
         </h1>
-        <p className="text-lg md:text-xl text-gray-400 mt-4 max-w-xl">
+        <p className="text-lg md:text-xl text-gray-400 mt-4 md:max-w-xl max-w-md">
           Share your online shopping experiences and help others avoid bad
           purchases.
         </p>
@@ -44,6 +45,9 @@ const HomePage = () => {
           "
           ></div>
         </div>
+      </section>
+      <section className="pb-24">
+        <Featuregrid />
       </section>
     </>
   );
