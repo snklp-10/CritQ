@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import TitleSection from "./titleSection";
 
 const features = [
   {
@@ -33,13 +34,12 @@ const features = [
 export default function BentoGrid() {
   return (
     <div className="w-full px-6 lg:px-12 py-6 space-y-4 flex flex-col items-center justify-center">
-      <span className="flex md:items-center md:justify-center justify-left w-full text-3xl md:text-5xl font-extrabold md:text-center ">
-        Explore CritQ Features
-      </span>
-      <span className="text-lg font-light sm:text-center text-white/70 md:max-w-3xl max-w-md">
-        From detailed reviews to a collaborative blacklist—CritQ empowers you to
-        make smarter choices and avoid bad experiences
-      </span>
+      <TitleSection
+        pill="Features"
+        title="Explore CritQ Features"
+        subheading="From detailed reviews to a collaborative blacklist—CritQ empowers you to
+        make smarter choices and avoid bad experiences"
+      />
 
       {/* Desktop Layout - Matches Provided Image */}
       <div className="hidden md:grid lg:grid-cols-2 lg:grid-rows-2 gap-6 w-[80%] max-h-[50%]">

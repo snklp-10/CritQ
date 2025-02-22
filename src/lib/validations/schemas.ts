@@ -18,3 +18,9 @@ export const signInSchema = z.object({
 export const verifyEmailSchema = z.object({
   token: z.string().min(10, "Invlaid token"),
 });
+
+export const FormSchema = z.object({
+  username: z.string().min(3, "Useranme must at least 3 characters long"),
+  email: z.string().describe("Email").email({ message: "Invalid Email" }),
+  password: z.string().describe("Password").min(3, "Password is required"),
+});

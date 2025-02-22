@@ -4,17 +4,18 @@ import React from "react";
 import Banner from "../../../public/CritQ Hero IMage.png";
 import Image from "next/image";
 import Featuregrid from "@/components/landing-page/featuregrid";
+import TestimonialSection from "@/components/landing-page/testimonial";
+import TitleSection from "@/components/landing-page/titleSection";
 const HomePage = () => {
   return (
     <>
-      <section className="flex flex-col items-center justify-center sm:text-center px-6 py-12 sm:py-16 md:py-32  text-white">
-        <h1 className="text-4xl md:text-6xl font-bold leading-tight max-w-5xl">
-          Expose Bad Products & Services.
-        </h1>
-        <p className="text-lg md:text-xl text-gray-400 mt-4 md:max-w-xl max-w-md">
-          Share your online shopping experiences and help others avoid bad
-          purchases.
-        </p>
+      <section className="flex flex-col md:items-center mdjustify-center sm:text-center px-6 py-12 text-white">
+        <TitleSection
+          pill="✨Your Review Common place"
+          title="Expose Bad Products & Services"
+          subheading="Share your online shopping experiences and help others avoid bad
+          purchases."
+        />
         <div className="w-full flex sm:justify-center items-center">
           <Button className="mt-6 px-6 py-3 text-lg font-semibold rounded-lg">
             <Link href="/signup">
@@ -46,8 +47,31 @@ const HomePage = () => {
           ></div>
         </div>
       </section>
-      <section className="pb-24">
+      <section id="features">
         <Featuregrid />
+      </section>
+      <section id="testimonials">
+        <TestimonialSection />
+      </section>
+      <section className="mt-10 mb-20">
+        <div className="md:text-center text-white px-6 rounded-lg">
+          <TitleSection
+            pill="Here's your chance"
+            title="Join the CritQ community Today!"
+            subheading="Help others make better decisions while avoiding bad experiences. Sign up and start sharing your reviews now!"
+          />
+          <div className="mt-5 flex md:justify-center gap-4">
+            <Button className="text-black font-semibold py-3 text-lg px-6 rounded-lg">
+              <Link href="/signup">Join now</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+      <div className="w-full border"></div>
+      <section>
+        <footer className="py-6 text-center">
+          <p className="mt-4 text-xs">© 2025 CritQ. All rights reserved.</p>
+        </footer>
       </section>
     </>
   );

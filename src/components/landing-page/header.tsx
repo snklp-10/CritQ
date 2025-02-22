@@ -17,12 +17,8 @@ const navbarComponents = [
     href: "#home",
   },
   {
-    title: "Reviews",
-    href: "#reviews",
-  },
-  {
-    title: "Blacklist",
-    href: "#blacklist",
+    title: "Features",
+    href: "#features",
   },
   {
     title: "Testimonials",
@@ -43,7 +39,7 @@ export default function Header() {
           <span className="text-2xl font-bold">CritQ</span>
         </Link>
         <NavigationMenu>
-          <NavigationMenuList className="hidden lg:flex space-x-6">
+          <NavigationMenuList className="hidden md:flex space-x-10">
             {navbarComponents.map((item, index = Math.random()) => (
               <NavigationMenuItem key={index}>
                 <NavigationMenuLink asChild>
@@ -56,7 +52,7 @@ export default function Header() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="hidden lg:flex space-x-4 ">
+        <div className="flex space-x-4 ">
           <Link href="/login">
             <Button variant="outline">
               <span>Login</span>
@@ -68,7 +64,7 @@ export default function Header() {
             </Button>
           </Link>
         </div>
-        <Button
+        {/* <Button
           className="lg:hidden text-white bg-background hover:bg-background hover:text-white/50"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -97,7 +93,7 @@ export default function Header() {
               </Button>
             </Link>
           </div>
-        )}
+        )} */}
       </div>
     </header>
   );
