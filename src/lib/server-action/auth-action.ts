@@ -3,6 +3,7 @@ import { FormSchema } from "../validations/schemas";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dbConnect from "../dbConfig/db";
+import TempUserModel from "@/models/TempUser"; // Create a TempUser model
 import UserModel from "@/models/User";
 import { z } from "zod";
 import { sendVerificationEmail } from "../sendEmail";
@@ -32,40 +33,47 @@ export async function actionSignUpUser({
   email,
   password,
 }: z.infer<typeof FormSchema>) {
-  await dbConnect();
-  const existingUser = await UserModel.findOne({ email });
-  if (existingUser) return { error: "User already exists" };
+  try {
+    await dbConnect();
+    const existingUser = await TempUserModel.findOne({ email });
+    if (existingUser) return { error: "User already exists" };
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = new UserModel({
-    username,
-    email,
-    password: hashedPassword,
-    isVerified: false,
-    role: "user",
-    rankingPoints: 0,
-    createdAt: new Date(),
-  });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const tempUser = new TempUserModel({
+      username,
+      email,
+      password: hashedPassword,
+      createdAt: new Date(),
+    });
 
-  await newUser.save();
+    await tempUser.save();
 
-  // Generate verification token
-  const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET!, {
-    expiresIn: "1d",
-  });
+    // Generate verification token
+    const token = jwt.sign({ userId: tempUser._id }, process.env.JWT_SECRET!, {
+      expiresIn: "1d",
+    });
 
-  // Create verification link
-  const verifyLink = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${token}`;
+    // Create verification link
+    const verifyLink = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${token}`;
 
-  // Send verification email
-  const emailResponse = await sendVerificationEmail(
-    email,
-    username,
-    verifyLink
-  );
-  if (!emailResponse.success) {
-    return { error: "User registered but failed to send verification email" };
+    // Send verification email
+    const emailResponse = await sendVerificationEmail(
+      email,
+      username,
+      verifyLink
+    );
+    if (!emailResponse.success) {
+      return { error: "User registered but failed to send verification email" };
+    }
+
+    return {
+      success: "User registered successfully. Verification email sent.",
+    };
+  } catch (error) {
+    console.error("Error in actionSignUpUser:", error);
+    return {
+      error:
+        "An error occurred during the signup process. Please try again later.",
+    };
   }
-
-  return { success: "User registered successfully. Verification email sent." };
 }

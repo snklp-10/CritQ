@@ -151,16 +151,16 @@ export default function SignUpPage() {
               </Link>
             </span>
           </div>
+          {confirmation && (
+            <Alert className="mt-4">
+              <MailCheck className="h-4 w-4" />
+              <AlertTitle>Check your email.</AlertTitle>
+              <AlertDescription>
+                An email confirmation has been sent.
+              </AlertDescription>
+            </Alert>
+          )}
         </form>
-        {confirmation && (
-          <Alert className="mt-4">
-            <MailCheck className="h-4 w-4" />
-            <AlertTitle>Check your email.</AlertTitle>
-            <AlertDescription>
-              An email confirmation has been sent.
-            </AlertDescription>
-          </Alert>
-        )}
       </Form>
     </div>
   );

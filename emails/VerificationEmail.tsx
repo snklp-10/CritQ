@@ -26,11 +26,11 @@ export const VerificationEmail = ({
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Heading style={styles.heading}>
-            Verify Your Email, {username}! 🔐
+            Verify Your Email, {username}!
           </Heading>
           <Text style={styles.text}>
-            Thank you for signing up for **CritQ**! To activate your account,
-            please verify your email by clicking the button below:
+            Thank you for signing up for <strong>CritQ</strong> To activate your
+            account, please verify your email by clicking the button below:
           </Text>
           <Button href={verifyLink} style={styles.button}>
             Verify Email
@@ -49,7 +49,7 @@ const styles = {
   body: {
     backgroundColor: "#f4f4f4",
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
+    fontFamily: "DM_Sans, sans-serif",
   },
   container: {
     backgroundColor: "#ffffff",
