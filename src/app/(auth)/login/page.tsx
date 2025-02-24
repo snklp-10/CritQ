@@ -46,7 +46,6 @@ export default function LoginPage() {
       setError(response.error);
       setLoading(false);
     } else {
-      alert("Login successful! Redirecting...");
       router.push("/home"); // Redirect to a dashboard or home page
     }
   };

@@ -3,7 +3,6 @@ import { FormSchema } from "../validations/schemas";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dbConnect from "../dbConfig/db";
-import TempUserModel from "@/models/TempUser"; // Create a TempUser model
 import UserModel from "@/models/User";
 import { z } from "zod";
 import { sendVerificationEmail } from "../sendEmail";
@@ -35,26 +34,29 @@ export async function actionSignUpUser({
 }: z.infer<typeof FormSchema>) {
   try {
     await dbConnect();
-    const existingUser = await TempUserModel.findOne({ email });
+    const existingUser = await UserModel.findOne({ email });
     if (existingUser) return { error: "User already exists" };
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const tempUser = new TempUserModel({
+    const newUser = new UserModel({
       username,
       email,
       password: hashedPassword,
+      isVerified: false,
+      role: "user",
+      rankingPoints: 0,
       createdAt: new Date(),
     });
 
-    await tempUser.save();
+    await newUser.save();
 
     // Generate verification token
-    const token = jwt.sign({ userId: tempUser._id }, process.env.JWT_SECRET!, {
+    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET!, {
       expiresIn: "1d",
     });
 
     // Create verification link
-    const verifyLink = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${token}`;
+    const verifyLink = `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify-email?token=${token}`;
 
     // Send verification email
     const emailResponse = await sendVerificationEmail(
